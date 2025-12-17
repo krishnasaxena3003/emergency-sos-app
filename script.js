@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // DEMO EMERGENCY CONTACTS
     // =========================
     const emergencyContacts = [
+        "916398758826",
         "917408141149",
         "919528544923",
         "917037754617"
@@ -94,6 +95,7 @@ I need immediate help!
     }
 
 });
+
 
 
 
