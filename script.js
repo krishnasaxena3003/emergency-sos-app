@@ -1,34 +1,100 @@
-function sendSOS() {
-    const status = document.getElementById("status");
+document.addEventListener("DOMContentLoaded", () => {
 
-    // Vibration (mobile only)
-    if (navigator.vibrate) {
-        navigator.vibrate([500, 300, 500]);
+    const btn = document.getElementById("sosBtn");
+    const status = document.getElementById("status");
+    let timer;
+
+    // =========================
+    // DEMO EMERGENCY CONTACTS
+    // =========================
+    const emergencyContacts = [
+        "917037754617",
+        "917408141149",
+        "919528544923"
+    ];
+    // Replace with real numbers (country code, no +)
+
+    // =========================
+    // AI VOICE
+    // =========================
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(msg);
     }
 
-    // Location
-    if (navigator.geolocation) {
+    // =========================
+    // LONG PRESS LOGIC
+    // =========================
+    function startPress() {
+        status.innerText = "Holding...";
+        timer = setTimeout(sendSOS, 2000);
+    }
+
+    function cancelPress() {
+        clearTimeout(timer);
+        status.innerText = "";
+    }
+
+    btn.addEventListener("mousedown", startPress);
+    btn.addEventListener("mouseup", cancelPress);
+    btn.addEventListener("touchstart", startPress);
+    btn.addEventListener("touchend", cancelPress);
+
+    // =========================
+    // MAIN SOS FUNCTION
+    // =========================
+    function sendSOS() {
+        status.innerText = "🚨 SOS Activated";
+
+        // Vibration (mobile only)
+        if (navigator.vibrate) {
+            navigator.vibrate([500, 300, 500]);
+        }
+
+        speak("SOS activated. Help is on the way.");
+
         navigator.geolocation.getCurrentPosition(
             position => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
 
-                status.innerHTML = `
-                    🚨 SOS Sent! <br>
-                    📍 Location:<br>
-                    Lat: ${lat.toFixed(4)}, Lon: ${lon.toFixed(4)}
-                `;
+                const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
 
-                // Emergency call (India example: 112)
+                const message = encodeURIComponent(
+                    `🚨 EMERGENCY SOS 🚨
+I need immediate help!
+📍 Location: ${mapsLink}`
+                );
+
+                status.innerText = "📍 Sending alerts to contacts";
+
+                // Send alert to all contacts
+                emergencyContacts.forEach(phone => {
+
+                    // WhatsApp
+                    window.open(
+                        `https://wa.me/${phone}?text=${message}`,
+                        "_blank"
+                    );
+
+                    // SMS fallback
+                    setTimeout(() => {
+                        window.location.href =
+                            `sms:${phone}?body=EMERGENCY! Location: ${mapsLink}`;
+                    }, 1000);
+                });
+
+                // Emergency Call (India - 112)
                 setTimeout(() => {
                     window.location.href = "tel:112";
-                }, 1500);
+                }, 2000);
             },
             () => {
-                status.innerHTML = "❌ Location access denied.";
+                status.innerText = "❌ Location permission denied";
             }
         );
-    } else {
-        status.innerHTML = "❌ Geolocation not supported.";
     }
-}
+
+});
+
+
