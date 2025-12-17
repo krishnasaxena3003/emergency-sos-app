@@ -8,9 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // DEMO EMERGENCY CONTACTS
     // =========================
     const emergencyContacts = [
-        "917037754617",
         "917408141149",
-        "919528544923"
+        "919528544923",
+        "917037754617"
     ];
     // Replace with real numbers (country code, no +)
 
@@ -66,18 +66,16 @@ I need immediate help!
 📍 Location: ${mapsLink}`
                 );
 
-                status.innerText = "📍 Sending alerts to contacts";
+                status.innerText = "📍 Sending alerts...";
 
-                // Send alert to all contacts
+                // ✅ WhatsApp → FIRST contact only
+                window.open(
+                    `https://wa.me/${emergencyContacts[0]}?text=${message}`,
+                    "_blank"
+                );
+
+                // ✅ SMS → ALL contacts
                 emergencyContacts.forEach(phone => {
-
-                    // WhatsApp
-                    window.open(
-                        `https://wa.me/${phone}?text=${message}`,
-                        "_blank"
-                    );
-
-                    // SMS fallback
                     setTimeout(() => {
                         window.location.href =
                             `sms:${phone}?body=EMERGENCY! Location: ${mapsLink}`;
@@ -96,5 +94,6 @@ I need immediate help!
     }
 
 });
+
 
 
