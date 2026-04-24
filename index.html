@@ -2,56 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
-    <!-- Mobile Responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>SOS Emergency App</title>
 
-    <!-- PWA -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ff0000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-    <!-- Icon -->
     <link rel="icon" href="icon-192.png">
-
-    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-
     <div class="container">
-
-        <!-- Main Card -->
         <div class="card">
-
             <h1>🚨 SOS EMERGENCY</h1>
 
-            <!-- SOS Button -->
-            <button class="sos-btn" id="sosBtn" aria-label="Emergency SOS Button">
+            <button class="sos-btn" id="sosBtn">
                 SOS
             </button>
 
-            <!-- Instruction -->
-            <p class="info">Press & hold for 2 seconds</p>
-
-            <!-- Dynamic Status -->
+            <p class="info">Press & hold for 1 second</p>
             <p id="status"></p>
-
         </div>
 
-        <!-- Footer -->
         <footer>
             Stay calm • Help is on the way
         </footer>
-
     </div>
 
-    <!-- JS -->
     <script src="script.js"></script>
-
 </body>
 </html>
